@@ -6,30 +6,34 @@ export class SignInPage extends Page {
   /**
    * define selectors using getter methods
    */
-  get inputUsername(): WebdriverIO.Element {
+  get inputUsername(): Promise<WebdriverIO.Element> {
     return $('#username input')
   }
 
-  get inputPassword(): WebdriverIO.Element {
+  get inputPassword(): Promise<WebdriverIO.Element> {
     return $('#password input')
   }
 
-  get btnSubmit(): WebdriverIO.Element {
+  get btnSubmit(): Promise<WebdriverIO.Element> {
     return $('#login-btn')
   }
 
-  get signedInUsername(): WebdriverIO.Element {
+  get signedInUsername(): Promise<WebdriverIO.Element> {
     return $('.username')
   }
 
-  login(username: string, password: string): void {
-    this.inputUsername.setValue(username + '\n');
-    this.inputPassword.setValue(password + '\n');
-    this.btnSubmit.click();
+  async login(username: string, password: string): Promise<void> {
+    await browser.pause(5000)
+    const usernameField = await this.inputUsername;
+    await usernameField.setValue(username + '\n');
+    const passwordField = await this.inputPassword
+    await passwordField.setValue(password + '\n');
+    const submitButton = await this.btnSubmit
+    await submitButton.click();
   }
 
-  getSignedInUsername(): WebdriverIO.Element {
-    return this.signedInUsername;
+  async getSignedInUsername(): Promise<WebdriverIO.Element> {
+    return await this.signedInUsername;
   }
 
 

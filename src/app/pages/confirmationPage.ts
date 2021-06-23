@@ -6,20 +6,22 @@ export class ConfirmationPage extends Page {
   /**
    * define selectors using getter methods
    */
-  get confirmationMessage(): WebdriverIO.Element {
+  get confirmationMessage(): Promise<WebdriverIO.Element> {
     return $('#confirmation-message')
   }
 
-  get continueShoppingButton(): WebdriverIO.Element {
+  get continueShoppingButton(): Promise<WebdriverIO.Element> {
     return $('div.continueButtonContainer button')
   }
 
-  clickContinueShoppingButton(): void {
-    this.continueShoppingButton.click();
+  async clickContinueShoppingButton(): Promise<void> {
+    const continueButton = await this.continueShoppingButton;
+    await continueButton.click();
   }
 
-  waitForConfirmationToBeDisplayed(): void {
-    this.confirmationMessage.waitForDisplayed({ timeout: 5000 });
+  async waitForConfirmationToBeDisplayed(): Promise<void> {
+    const confirmMessage =  await this.confirmationMessage;
+    await confirmMessage.waitForDisplayed({ timeout: 10000 });
   }
 
 }

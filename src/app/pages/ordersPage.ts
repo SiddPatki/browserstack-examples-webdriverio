@@ -6,15 +6,16 @@ export class OrdersPage extends Page {
   /**
    * define selectors using getter methods
    */
-  get allOrders(): WebdriverIO.ElementArray {
+  get allOrders(): Promise<WebdriverIO.ElementArray> {
     return $$('.order')
   }
 
-  get firstOrder(): WebdriverIO.Element {
+  get firstOrder(): Promise<WebdriverIO.Element> {
     return $('.order')
   }
 
-  waitforOrdersToDisplay(): void {
-    this.firstOrder.waitForDisplayed({ timeout: 5000 });
+  async waitforOrdersToDisplay(): Promise<void> {
+    const firstOrderElement = await this.firstOrder;
+    await firstOrderElement.waitForDisplayed();
   }
 }

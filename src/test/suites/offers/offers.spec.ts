@@ -3,30 +3,30 @@ import * as accounts from '../../../../resources/data/user.json';
 
 describe('StackDemo Offers', () => {
 
-  beforeEach('Open StackDemo', () => {
-    browser.url('');
+  beforeEach('Open StackDemo', async () => {
+    await browser.url('');
   })
 
-  afterEach('clear sessionstorage', () => {
-    browser.execute(() => sessionStorage.clear())
+  afterEach('clear sessionstorage', async () => {
+    await browser.execute(() => sessionStorage.clear())
   })
 
-  it('Check offers for India', () => {
-    $('#signin').click();
-    $('#username input').setValue(accounts[0].username + '\n');
-    $('#password input').setValue(accounts[0].password + '\n');
-    $('#login-btn').click();
+  it('Check offers for India', async () => {
+    await (await $('#signin')).click();
+    await (await $('#username input')).setValue(accounts[0].username + '\n');
+    await (await $('#password input')).setValue(accounts[0].password + '\n');
+    await (await $('#login-btn')).click();
 
-    browser.execute(function () {
+    await browser.execute(function () {
       window.navigator.geolocation.getCurrentPosition = function (success) {
         const position: GeolocationPosition = { coords: { latitude: 1, longitude: 103, accuracy: 20, altitude: null, altitudeAccuracy: null, heading: null, speed: null }, timestamp: Date.now() };
         success(position);
       }
     });
-    $('#offers').click();
+    await ( await $('#offers')).click();
 
-    $(".offer").waitForDisplayed({ timeout: 5000 });
-    expect($$('.offer')).to.have.length(3);
+    await ( await $(".offer")).waitForDisplayed({ timeout: 5000 });
+    expect(await $$('.offer')).to.have.length(3);
   })
 })
 

@@ -1,18 +1,18 @@
 describe('StackDemo login', () => {
 
-  beforeEach('Open StackDemo', () => {
-    browser.url('');
+  beforeEach('Open StackDemo', async () => {
+    await browser.url('');
   })
 
-  afterEach('clear sessionstorage', () => {
-    browser.execute(() => sessionStorage.clear())
+  afterEach('clear sessionstorage', async () => {
+    await browser.execute(() => sessionStorage.clear())
   })
 
-  it('Navigated to login on clicking favourites Nav Item', () => {
-    $('#favourites').click();
+  it('Navigated to login on clicking favourites Nav Item', async () => {
+    await ( await $('#favourites')).click();
 
-    browser.waitUntil(() => {
-      const pageUrl = browser.getUrl();
+    browser.waitUntil(async () => {
+      const pageUrl = await browser.getUrl();
       return pageUrl.indexOf('signin?favourites=true') > -1
     }, { timeout: 5000 })
   })

@@ -13,7 +13,7 @@
     "strictNullChecks": true,
     "skipLibCheck": true,
     "types": [
-      "webdriverio/sync",
+      "webdriverio/async",
       "mocha",
       "chai",
       "node"

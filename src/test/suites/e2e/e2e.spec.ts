@@ -9,48 +9,48 @@ import * as accounts from '../../../../resources/data/user.json';
 
 describe('Order a product', () => {
 
-  beforeEach('Open StackDemo', () => {
-    browser.url('');
+  beforeEach('Open StackDemo', async () => {
+    await browser.url('');
   })
 
-  afterEach('clear sessionstorage', () => {
-    browser.execute(() => sessionStorage.clear())
+  afterEach('clear sessionstorage', async () => {
+    await browser.execute(() => sessionStorage.clear())
   })
 
-  it('Login and order a product', () => {
+  it('Login and order a product', async () => {
 
     const homePage = new HomePage();
-    homePage.navigateToSignIn();
+    await homePage.navigateToSignIn();
 
     const signInPage = new SignInPage();
-    signInPage.login(accounts[0].username, accounts[0].password);
-    expect(signInPage.getSignedInUsername().getText()).to.equal(accounts[0].username);
+    await signInPage.login(accounts[0].username, accounts[0].password);
+    expect(await (await signInPage.getSignedInUsername()).getText()).to.equal(accounts[0].username);
 
-    homePage.selectPhone('iPhone XS');
-    homePage.closeCartModal();
-    homePage.selectPhone('Galaxy S20');
-    homePage.clickBuyButton();
+    await homePage.selectPhone('iPhone XS');
+    await homePage.closeCartModal();
+    await homePage.selectPhone('Galaxy S20');
+    await homePage.clickBuyButton();
 
     const checkoutPage = new CheckoutPage();
 
-    checkoutPage.enterFirstName('firstname');
-    checkoutPage.enterLastName('lastname');
-    checkoutPage.enterAddressLine1('address');
-    checkoutPage.enterProvince('state');
-    checkoutPage.enterPostCode('12345');
-    checkoutPage.clickSubmit();
+    await checkoutPage.enterFirstName('firstname');
+    await checkoutPage.enterLastName('lastname');
+    await checkoutPage.enterAddressLine1('address');
+    await checkoutPage.enterProvince('state');
+    await checkoutPage.enterPostCode('12345');
+    await checkoutPage.clickSubmit();
 
     const confirmationPage = new ConfirmationPage();
 
-    confirmationPage.waitForConfirmationToBeDisplayed();
-    expect(confirmationPage.confirmationMessage.getText()).to.equal('Your Order has been successfully placed.');
-    confirmationPage.clickContinueShoppingButton();
+    await confirmationPage.waitForConfirmationToBeDisplayed();
+    expect(await (await confirmationPage.confirmationMessage).getText()).to.equal('Your Order has been successfully placed.');
+    await confirmationPage.clickContinueShoppingButton();
 
-    homePage.navigateToOrders();
+    await homePage.navigateToOrders();
 
     const ordersPage = new OrdersPage();
-    ordersPage.waitforOrdersToDisplay();
-    expect(ordersPage.allOrders).to.have.length(1);
+    await ordersPage.waitforOrdersToDisplay();
+    expect(await ordersPage.allOrders).to.have.length(1);
   })
 })
 

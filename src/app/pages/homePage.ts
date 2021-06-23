@@ -7,53 +7,58 @@ export class HomePage extends Page {
   /**
    * define selectors using getter methods
    */
-  get signInLink(): WebdriverIO.Element {
+  get signInLink(): Promise<WebdriverIO.Element> {
     return $('#signin')
   }
 
-  get ordersLink(): WebdriverIO.Element {
+  get ordersLink(): Promise<WebdriverIO.Element> {
     return $('#orders')
   }
 
-  get iPhoneXSElement(): WebdriverIO.Element {
+  get iPhoneXSElement(): Promise<WebdriverIO.Element> {
     return $("//p[text() = 'iPhone XS']/../div[@class = 'shelf-item__buy-btn']")
   }
 
-  get phonesBuyButton(): WebdriverIO.Element {
+  get phonesBuyButton(): Promise<WebdriverIO.Element> {
     return $("//p[text() = '" + phoneName + "']/../div[@class = 'shelf-item__buy-btn']")
   }
 
-  get cartCloseButton(): WebdriverIO.Element {
+  get cartCloseButton(): Promise<WebdriverIO.Element> {
     return $('.float-cart__close-btn')
   }
 
-  get buyButton(): WebdriverIO.Element {
+  get buyButton(): Promise<WebdriverIO.Element> {
     return $('.buy-btn')
   }
 
-  navigateToSignIn(): void {
-    this.signInLink.click();
+  async navigateToSignIn(): Promise<void> {
+    const signIn = await this.signInLink;
+    await signIn.click();
   }
 
-  navigateToOrders(): void {
-    this.ordersLink.click();
+  async navigateToOrders(): Promise<void> {
+    const orderLink = await this.ordersLink;
+    await orderLink.click();
   }
 
-  selectPhone(phoneToSelect: string): void {
+  async selectPhone(phoneToSelect: string): Promise<void> {
     phoneName = phoneToSelect;
-    this.phonesBuyButton.click();
+    const buyPhoneButton = await this.phonesBuyButton;
+    await buyPhoneButton.click();
   }
 
-  closeCartModal(): void {
-    this.cartCloseButton.click();
+  async closeCartModal(): Promise<void> {
+    const closeCartButton = await this.cartCloseButton;
+    await closeCartButton.click();
   }
 
-  clickBuyButton(): void {
-    this.buyButton.waitForClickable({ timeout: 5000 });
-    this.buyButton.click();
+  async clickBuyButton(): Promise<void> {
+    const buyButtonElement = await this.buyButton;
+    await buyButtonElement.waitForClickable();
+    await buyButtonElement.click();
   }
 
-  open(): string {
-    return super.open('');
+  async open(): Promise<string> {
+    return await super.open('');
   }
 }

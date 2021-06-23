@@ -6,55 +6,61 @@ export class CheckoutPage extends Page {
   /**
    * define selectors using getter methods
    */
-  get firstNameInput(): WebdriverIO.Element {
+  get firstNameInput(): Promise<WebdriverIO.Element> {
     return $('#firstNameInput')
   }
 
-  get lastNameInput(): WebdriverIO.Element {
+  get lastNameInput(): Promise<WebdriverIO.Element> {
     return $('#lastNameInput')
   }
 
-  get addressLine1Input(): WebdriverIO.Element {
+  get addressLine1Input(): Promise<WebdriverIO.Element> {
     return $('#addressLine1Input')
   }
 
-  get provinceInput(): WebdriverIO.Element {
+  get provinceInput(): Promise<WebdriverIO.Element> {
     return $('#provinceInput')
   }
 
-  get postCodeInput(): WebdriverIO.Element {
+  get postCodeInput(): Promise<WebdriverIO.Element> {
     return $('#postCodeInput')
   }
 
-  get checkoutShippingContinue(): WebdriverIO.Element {
+  get checkoutShippingContinue(): Promise<WebdriverIO.Element> {
     return $('#checkout-shipping-continue')
   }
 
-  enterFirstName(firstName: string): void {
-    this.firstNameInput.setValue(firstName);
+  async enterFirstName(firstName: string): Promise<void> {
+    const firstNameField = await this.firstNameInput;
+    await firstNameField.setValue(firstName);
   }
 
-  enterLastName(lastName: string): void {
-    this.lastNameInput.setValue(lastName);
+  async enterLastName(lastName: string): Promise<void> {
+    const lastNameField = await this.lastNameInput;
+    await lastNameField.setValue(lastName);
   }
 
-  enterAddressLine1(addressLine1: string): void {
-    this.addressLine1Input.setValue(addressLine1);
+  async enterAddressLine1(addressLine1: string): Promise<void> {
+    const addressField = await this.addressLine1Input;
+    await addressField.setValue(addressLine1);
   }
 
-  enterProvince(province: string): void {
-    this.provinceInput.setValue(province);
+  async enterProvince(province: string): Promise<void> {
+    const provinceField = await this.provinceInput;
+    await provinceField.setValue(province);
   }
 
-  enterPostCode(postCode: string): void {
-    this.postCodeInput.setValue(postCode);
+  async enterPostCode(postCode: string): Promise<void> {
+    const postCodeField = await this.postCodeInput;
+    await postCodeField.setValue(postCode);
   }
 
-  clickSubmit(): void {
-    this.checkoutShippingContinue.click();
+  async clickSubmit(): Promise<void> {
+    const checkoutShippingContinueButton = await this.checkoutShippingContinue;
+    await checkoutShippingContinueButton.click();
   }
 
-  open(): string {
-    return super.open('');
+  async open(): Promise<string> {
+    return await super.open('');
   }
 }
