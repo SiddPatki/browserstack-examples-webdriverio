@@ -11,7 +11,8 @@ describe('StackDemo filters', () => {
   })
 
   it('Apply vendor filter', async () => {
-    await ( await $("input[value='Apple'] + span")).click();
+    const appleFilter = await $("input[value='Apple'] + span")
+    await appleFilter.click();
     await browser.pause(5000)                                               // Example for static wait
     const all_phones = (await $$(".shelf-item__title")).map(async function (element) {
       return await element.getText()

@@ -12,7 +12,8 @@ describe('StackDemo filters', () => {
   })
 
   it('Lowest to Highest filter is applied', async () => {
-    await ( await $('.sort select')).selectByAttribute('value', 'lowestprice');
+    const sortByElement = await $('.sort select')
+    await sortByElement.selectByAttribute('value', 'lowestprice');
     await browser.waitUntil(
       async () => await (await $("//*[@class = 'shelf-item__title'][1]")).getText() === 'Pixel 2',
       {

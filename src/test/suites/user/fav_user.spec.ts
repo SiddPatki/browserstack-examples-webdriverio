@@ -12,12 +12,17 @@ describe('StackDemo user suite', () => {
   })
 
   it('User with favourites should see 5 items', async () => {
-    await ( await $('#signin')).click();
-    await ( await $('#username input')).setValue(accounts[0].username + '\n');
-    await ( await $('#password input')).setValue(accounts[0].password + '\n');
-    await ( await $('#login-btn')).click();
+    const signInButton = await $('#signin')
+    await signInButton.click();
+    const userNameField = await $('#username input')
+    await userNameField.setValue(accounts[0].username + '\n');
+    const passwordField = await $('#password input')
+    await passwordField.setValue(accounts[0].password + '\n');
+    const loginButton = await $('#login-btn')
+    await loginButton.click();
 
-    await ( await $('#favourites')).click();
+    const favouritesButton = await $('#favourites')
+    await favouritesButton.click();
 
     await browser.waitUntil(async () => {
       const pageUrl = await browser.getUrl();

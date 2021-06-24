@@ -13,12 +13,18 @@ describe('Password input validation', function () {
     })
 
     it(`Login should not be successful for account with username ''`, async () => {
-      await ( await $('#signin')).click();
-      await ( await $('#username input')).setValue(item.username + '\n');
-      await ( await $('#password input')).setValue(item.password + '\n');
-      await ( await $('#login-btn')).click();
+      const signInButton = await $('#signin')
+      await signInButton.click();
+      const userNameField = await $('#username input')
+      await userNameField.setValue(item.username + '\n');
+      const passwordField = await $('#password input')
+      await passwordField.setValue(item.password + '\n');
+      const logInButton = await $('#login-btn')
+      await logInButton.click();
 
-      expect(await ( await $('.api-error')).getText()).to.equal(item.expected_message);
+      const errorMessage = await $('.api-error')
+
+      expect(await errorMessage.getText()).to.equal(item.expected_message);
     });
   })
 });

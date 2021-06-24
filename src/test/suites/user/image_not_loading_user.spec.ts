@@ -12,11 +12,17 @@ describe('StackDemo user suite', () => {
   })
 
   it('All product images should load for user',async () => {
-    await (await $('#signin')).click();
-    await (await $('#username input')).setValue(accounts[2].username + '\n');
-    await (await $('#password input')).setValue(accounts[2].password + '\n');
-    await (await $('#login-btn')).click();
-    expect(await (await $('.username')).getText()).to.equal('image_not_loading_user');
+    const signInButton = await $('#signin')
+    await signInButton.click();
+    const userNameField = await $('#username input')
+    await userNameField.setValue(accounts[2].username + '\n');
+    const passwordField = await $('#password input')
+    await passwordField.setValue(accounts[2].password + '\n');
+    const loginButton = await $('#login-btn')
+    await loginButton.click();
+
+    const userName = await $('.username')
+    expect(await userName.getText()).to.equal('image_not_loading_user');
 
     const all_images = (await $$("div.shelf-item__thumb img")).map(function (element) {
       return element.getAttribute("src");

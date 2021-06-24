@@ -9,7 +9,8 @@ describe('StackDemo login', () => {
   })
 
   it('Navigated to login on clicking favourites Nav Item', async () => {
-    await ( await $('#favourites')).click();
+    const favourites = await $('#favourites')
+    await favourites.click();
 
     browser.waitUntil(async () => {
       const pageUrl = await browser.getUrl();

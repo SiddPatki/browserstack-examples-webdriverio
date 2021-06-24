@@ -12,15 +12,21 @@ describe('StackDemo user suite', () => {
   })
 
   it('Logged in user should be able to add favourite', async () => {
-    await ( await $('#signin')).click();
-    await ( await $('#username input')).setValue(accounts[3].username + '\n');
-    await ( await $('#password input')).setValue(accounts[3].password + '\n');
-    await ( await $('#login-btn')).click();
+    const signIn = await $('#signin')
+    await signIn.click();
+    const userNameField = await $('#username input')
+    await userNameField.setValue(accounts[3].username + '\n');
+    const passwordField = await $('#password input')
+    await passwordField.setValue(accounts[3].password + '\n');
+    const loginButton = await $('#login-btn')
+    await loginButton.click();
 
-    await ( await $("//p[text() = 'iPhone 12']/../div/button")).waitForDisplayed({ timeout: 5000 });
-    await ( await $("//p[text() = 'iPhone 12']/../div/button")).click();
+    const iphone12 = await $("//p[text() = 'iPhone 12']/../div/button")
+    await iphone12.waitForDisplayed({ timeout: 5000 });
+    await iphone12.click();
 
-    await ( await $('#favourites')).click();
+    const favouritesButton = await $('#favourites')
+    await favouritesButton.click();
 
     await browser.waitUntil(async () => {
       const pageUrl = await browser.getUrl();

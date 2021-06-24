@@ -12,12 +12,19 @@ describe('StackDemo login', () => {
   })
 
   it(`Login should be successful for account with username 'image_not_loading_user'`, async function () {
-    await ( await $('#signin')).click();
-    await ( await $('#username input')).setValue(accounts[2].username + '\n');
-    await ( await $('#password input')).setValue(accounts[2].password + '\n');
-    await ( await $('#login-btn')).click();
+    const signInButton = await $('#signin')
+    await signInButton.click();
+    const userNameField = await $('#username input')
+    await userNameField.setValue(accounts[2].username + '\n');
+    const passwordField = await $('#password input')
+    await passwordField.setValue(accounts[2].password + '\n');
+    const logInButton = await $('#login-btn')
+    await logInButton.click();
 
-    expect(await ( await $('.username')).getText()).to.equal(accounts[2].username);
-    await ( await $('#logout')).click();
+    const userName = await $('.username')
+
+    expect(await userName.getText()).to.equal(accounts[2].username);
+    const logOutButton = await $('#logout')
+    await logOutButton.click();
   });
 })

@@ -11,11 +11,17 @@ describe('StackDemo login', () => {
   })
 
   it(`Login sholud not be successful for account with username 'locked_user'`, async function () {
-    await ( await $('#signin')).click();
-    await ( await $('#username input')).setValue(accounts[1].username + '\n');
-    await ( await $('#password input')).setValue(accounts[1].password + '\n');
-    await ( await $('#login-btn')).click();
+    const signInButton = await $('#signin')
+    await signInButton.click();
+    const userNameField = await $('#username input')
+    await userNameField.setValue(accounts[1].username + '\n');
+    const passwordField = await $('#password input')
+    await passwordField.setValue(accounts[1].password + '\n');
+    const logInButton = await $('#login-btn')
+    await logInButton.click();
+    
+    const errorMessage = await $('.api-error')
 
-    expect(await ( await $('.api-error')).getText()).to.equal('Your account has been locked.');
+    expect(await errorMessage.getText()).to.equal('Your account has been locked.');
   });
 })

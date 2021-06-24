@@ -12,10 +12,14 @@ describe('StackDemo Offers', () => {
   })
 
   it('Check offers for India', async () => {
-    await (await $('#signin')).click();
-    await (await $('#username input')).setValue(accounts[0].username + '\n');
-    await (await $('#password input')).setValue(accounts[0].password + '\n');
-    await (await $('#login-btn')).click();
+    const signIn = await $('#signin')
+    await signIn.click();
+    const userNameField = await $('#username input')
+    await userNameField.setValue(accounts[0].username + '\n');
+    const passwordField = await $('#password input')
+    await passwordField.setValue(accounts[0].password + '\n');
+    const logInButton = await $('#login-btn')
+    await logInButton.click();
 
     await browser.execute(function () {
       window.navigator.geolocation.getCurrentPosition = function (success) {
@@ -23,9 +27,11 @@ describe('StackDemo Offers', () => {
         success(position);
       }
     });
-    await ( await $('#offers')).click();
+    const offersButton = await $('#offers')
+    await offersButton.click();
 
-    await ( await $(".offer")).waitForDisplayed({ timeout: 5000 });
+    const offer  = await $(".offer")
+    await offer.waitForDisplayed({ timeout: 5000 });
     expect(await $$('.offer')).to.have.length(3);
   })
 })
