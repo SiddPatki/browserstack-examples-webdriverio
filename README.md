@@ -247,7 +247,7 @@ In this section, we will run a single test on Chrome browser on Browserstack. To
     set BROWSERSTACK_BUILD_NAME=<browserstack_build_name>
     ```
 
-  - Set session name by command line aregument: You can do this while running test like below.
+  - Set session name by command line argument: You can do this while running test like below.
 
     ```sh
     npm run bstack-single -- --bstack-session-name <session_name>
