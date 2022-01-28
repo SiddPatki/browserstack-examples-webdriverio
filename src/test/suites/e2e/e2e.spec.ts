@@ -24,7 +24,7 @@ describe('Order a product', () => {
 
     const signInPage = new SignInPage();
     await signInPage.login(accounts[0].username, accounts[0].password);
-    expect(await (await signInPage.getSignedInUsername()).getText()).to.equal(accounts[0].username);
+    await expect(await (await signInPage.getSignedInUsername()).getText()).to.equal(accounts[0].username);
 
     await homePage.selectPhone('iPhone XS');
     await homePage.closeCartModal();
@@ -43,14 +43,20 @@ describe('Order a product', () => {
     const confirmationPage = new ConfirmationPage();
 
     await confirmationPage.waitForConfirmationToBeDisplayed();
-    expect(await (await confirmationPage.confirmationMessage).getText()).to.equal('Your Order has been successfully placed.');
+    await expect(await (await confirmationPage.confirmationMessage).getText()).to.equal('Your Order has been successfully placed.');
+    await confirmationPage.clickDownloadPdf();
+    await confirmationPage.downloadedFileExists();
+    // if(browser.config.onBrowserstack){
+    //   await confirmationPage.clickDownloadPdf();
+    //   await confirmationPage.downloadedFileExists();
+    // }
     await confirmationPage.clickContinueShoppingButton();
 
     await homePage.navigateToOrders();
 
     const ordersPage = new OrdersPage();
     await ordersPage.waitforOrdersToDisplay();
-    expect(await ordersPage.allOrders).to.have.length(1);
+    await expect(await ordersPage.allOrders).to.have.length(1);
   })
 })
 

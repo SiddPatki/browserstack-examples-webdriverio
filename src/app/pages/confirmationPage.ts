@@ -1,3 +1,4 @@
+import { expect } from "chai";
 import { Page } from "./basePage";
 /**
  * sub page containing specific selectors and methods for a specific page
@@ -13,6 +14,9 @@ export class ConfirmationPage extends Page {
   get continueShoppingButton(): Promise<WebdriverIO.Element> {
     return $('div.continueButtonContainer button')
   }
+  get downloadPDFLink(): Promise<WebdriverIO.Element> {
+    return $('#downloadpdf');
+  }
 
   async clickContinueShoppingButton(): Promise<void> {
     const continueButton = await this.continueShoppingButton;
@@ -22,6 +26,17 @@ export class ConfirmationPage extends Page {
   async waitForConfirmationToBeDisplayed(): Promise<void> {
     const confirmMessage =  await this.confirmationMessage;
     await confirmMessage.waitForDisplayed({ timeout: 10000 });
+  }
+
+  async clickDownloadPdf(): Promise<void> {
+    (await this.downloadPDFLink).click();
+  }
+
+  async downloadedFileExists(): Promise<void> {
+    await browser.pause(2000);
+    const fileExists = await browser.execute('browserstack_executor: {"action": "fileExists"}');
+
+    await expect(fileExists).equals(true);
   }
 
 }

@@ -21,18 +21,18 @@ describe('StackDemo Offers', () => {
     const logInButton = await $('#login-btn')
     await logInButton.click();
 
-    await browser.execute(function () {
-      window.navigator.geolocation.getCurrentPosition = function (success) {
-        const position: GeolocationPosition = { coords: { latitude: 1, longitude: 103, accuracy: 20, altitude: null, altitudeAccuracy: null, heading: null, speed: null }, timestamp: Date.now() };
-        success(position);
-      }
-    });
+    await browser.execute(() => {
+        window.navigator.geolocation.getCurrentPosition = function (success) {
+          const position: GeolocationPosition = { coords: { latitude: 1, longitude: 103, accuracy: 20, altitude: null, altitudeAccuracy: null, heading: null, speed: null }, timestamp: Date.now() };
+          success(position);
+        };
+      });
     const offersButton = await $('#offers')
     await offersButton.click();
 
     const offer  = await $(".offer")
     await offer.waitForDisplayed({ timeout: 5000 });
-    expect(await $$('.offer')).to.have.length(3);
+    await expect(await $$('.offer')).to.have.length(3);
   })
 })
 

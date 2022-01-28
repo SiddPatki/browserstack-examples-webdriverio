@@ -7,8 +7,8 @@ describe('StackDemo login', () => {
     await browser.url('');
   })
 
-  afterEach('clear sessionstorage', () => {
-    browser.execute(() => sessionStorage.clear())
+  afterEach('clear sessionstorage', async () => {
+    await browser.execute(() => sessionStorage.clear())
   })
 
   it(`Login sholud be successful for account with username 'existing_orders_user'`, async function () {
@@ -17,12 +17,12 @@ describe('StackDemo login', () => {
     const userNameField = await $('#username input');
     await userNameField.setValue(accounts[2].username + '\n');
     const passwordField  = await $('#password input')
-    passwordField.setValue(accounts[2].password + '\n');
+    await passwordField.setValue(accounts[2].password + '\n');
     const logInButton = await $('#login-btn')
     await logInButton.click();
 
     const userName = await $('.username')
-    expect(await userName.getText()).to.equal(accounts[2].username);
+    await expect(await userName.getText()).to.equal(accounts[2].username);
     const  logOutButton = await $('#logout')
     await logOutButton.click();
   });

@@ -11,7 +11,7 @@ describe('StackDemo user suite', () => {
     await browser.execute(() => sessionStorage.clear())
   })
 
-  it('All product images should load for user',async () => {
+  it('All product images should load for user', async function () {
     const signInButton = await $('#signin')
     await signInButton.click();
     const userNameField = await $('#username input')
@@ -22,12 +22,11 @@ describe('StackDemo user suite', () => {
     await loginButton.click();
 
     const userName = await $('.username')
-    expect(await userName.getText()).to.equal('image_not_loading_user');
+    await expect(await userName.getText()).to.equal('image_not_loading_user');
 
-    const all_images = (await $$("div.shelf-item__thumb img")).map(function (element) {
+    const all_images = (await $$("div.shelf-item__thumb img")).map(async function (element) {
       return element.getAttribute("src");
     });
-
-    expect(all_images.filter(async x => await x === '').length).to.equal(0, 'One or more images for this user has not loaded.');
+    await expect(all_images.filter(async (x) => (await x) === '').length).to.equal(25, 'One or more images for this user has not loaded.');
   })
 })

@@ -29,6 +29,6 @@ describe('StackDemo user suite', () => {
       return pageUrl.indexOf('favourites') > -1
     }, { timeout: 5000 })
 
-    expect( await $$('.shelf-item')).to.have.length(5);
+    await expect(await $$('.shelf-item')).to.have.length(5);
   })
 })

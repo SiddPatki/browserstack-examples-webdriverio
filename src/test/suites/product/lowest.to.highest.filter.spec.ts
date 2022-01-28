@@ -15,7 +15,7 @@ describe('StackDemo filters', () => {
     const sortByElement = await $('.sort select')
     await sortByElement.selectByAttribute('value', 'lowestprice');
     await browser.waitUntil(
-      async () => await (await $("//*[@class = 'shelf-item__title'][1]")).getText() === 'Pixel 2',
+      async () => await ((await $("//*[@class = 'shelf-item__title'][1]")).getText()) === 'Pixel 2',
       {
         timeout: 5000,
         timeoutMsg: 'expected filtering to happen within 5s'
@@ -24,6 +24,6 @@ describe('StackDemo filters', () => {
     const all_prices = (await $$(".val > b")).map(async function (element) {
       return parseInt(await element.getText())
     });
-    expect(_.isEqual(all_prices, _.orderBy(all_prices, [], ['asc']))).to.equal(true, "Lowest to Highest filter is not applied");
+    await expect(_.isEqual(all_prices, _.orderBy(all_prices, [], ['asc']))).to.equal(true, "Lowest to Highest filter is not applied");
   })
 })

@@ -8,7 +8,8 @@ const overrides = {
     './src/test/suites/offers/*.ts',
     './src/test/suites/product/*.ts',
     './src/test/suites/e2e/*.ts',
-    './src/test/suites/user/*.ts'
+    './src/test/suites/user/*.ts',
+    './src/test/suites/accessibility/*.ts'
   ],
   capabilities: [{
     maxInstances: 5

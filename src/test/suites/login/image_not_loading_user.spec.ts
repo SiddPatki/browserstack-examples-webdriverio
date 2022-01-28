@@ -23,7 +23,7 @@ describe('StackDemo login', () => {
 
     const userName = await $('.username')
 
-    expect(await userName.getText()).to.equal(accounts[2].username);
+    await expect(await userName.getText()).to.equal(accounts[2].username);
     const logOutButton = await $('#logout')
     await logOutButton.click();
   });

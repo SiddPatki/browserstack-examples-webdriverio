@@ -22,6 +22,6 @@ describe('StackDemo login', () => {
     
     const errorMessage = await $('.api-error')
 
-    expect(await errorMessage.getText()).to.equal('Your account has been locked.');
+    await expect(await errorMessage.getText()).to.equal('Your account has been locked.');
   });
 })

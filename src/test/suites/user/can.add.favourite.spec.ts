@@ -28,11 +28,17 @@ describe('StackDemo user suite', () => {
     const favouritesButton = await $('#favourites')
     await favouritesButton.click();
 
-    await browser.waitUntil(async () => {
-      const pageUrl = await browser.getUrl();
-      return pageUrl.indexOf('favourites') > -1;
-    }, { timeout: 5000 })
+    await browser.waitUntil(
+      async () => (await (await browser.getUrl()).indexOf('favourites')) > -1,
+     { timeout: 5000,
+    timeoutMsg: 'expected favourites to load within 5s'
+  }
+  );
     await browser.pause(5000)
-    expect((await $$('p.shelf-item__title')).map(async e => await e.getText())).to.contain('iPhone 12');
+    const fav_items = (await $$('p.shelf-item__title')).map(async function (element) {
+      return element.getText()
+    });
+    await expect(fav_items.filter(async (x) => (await x).includes('iPhone')).length).to.equal(fav_items.length, "Vendor filter is not applied");
+    // await expect(fav_items).to.contain('iPhone 12',"User was able to add favourites");
   })
 })

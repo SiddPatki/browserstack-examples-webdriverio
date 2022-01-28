@@ -24,7 +24,7 @@ describe('Password input validation', function () {
 
       const errorMessage = await $('.api-error')
 
-      expect(await errorMessage.getText()).to.equal(item.expected_message);
+      await expect(await errorMessage.getText()).to.equal(item.expected_message);
     });
   })
 });

@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import * as parseArgs from 'minimist';
 
 const overrides = {
+  onBrowserstack: true,
   user: process.env.BROWSERSTACK_USERNAME || 'BROWSERSTACK_USERNAME',
   key: process.env.BROWSERSTACK_ACCESS_KEY || 'BROWSERSTACK_ACCESS_KEY',
   specs: [
@@ -21,21 +22,21 @@ const overrides = {
     browser_version: "latest",
     acceptInsecureCerts: true,
     name: (parseArgs(process.argv.slice(2)))['bstack-session-name'] || 'default_name',
-    build: process.env.BROWSERSTACK_BUILD_NAME || 'browserstack-examples-webdriverio' + " - " + new Date().getTime()
+    build: process.env.BROWSERSTACK_BUILD_NAME || 'browserstack-examples-webdriverio-typescript' + " - " + new Date().getTime()
   }],
   afterTest: async function (test: { title: string; }, context: Record<string, unknown>, { passed, error }: Record<string, unknown>) {
     if ((parseArgs(process.argv.slice(2)))['bstack-session-name']) {
-      await browser.executeScript("browserstack_executor: {\"action\": \"setSessionName\", \"arguments\": {\"name\":\"" +
+      await browser.execute("browserstack_executor: {\"action\": \"setSessionName\", \"arguments\": {\"name\":\"" +
         (parseArgs(process.argv.slice(2)))['bstack-session-name'] + "\" }}");
     } else {
-      await browser.executeScript("browserstack_executor: {\"action\": \"setSessionName\", \"arguments\": {\"name\":\"" + test.title + "\" }}");
+      await browser.execute("browserstack_executor: {\"action\": \"setSessionName\", \"arguments\": {\"name\":\"" + test.title + "\" }}");
     }
 
     if (passed) {
-      await browser.executeScript('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed","reason": "Assertions passed"}}');
+      await browser.execute('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed","reason": "Assertions passed"}}');
     } else {
       await browser.takeScreenshot();
-      await browser.executeScript('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "At least 1 assertion failed. ' + error + '"}}');
+      await browser.execute('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "At least 1 assertion failed. ' + error + '"}}');
     }
   }
 };

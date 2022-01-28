@@ -15,8 +15,8 @@ describe('StackDemo filters', () => {
     await appleFilter.click();
     await browser.pause(5000)                                               // Example for static wait
     const all_phones = (await $$(".shelf-item__title")).map(async function (element) {
-      return await element.getText()
+      return element.getText()
     });
-    expect(all_phones.filter(async (x) => (await x).includes('iPhone')).length).to.equal(all_phones.length, "Vendor filter is not applied");
+    await expect(all_phones.filter(async (x) => (await x).includes('iPhone')).length).to.equal(all_phones.length, "Vendor filter is not applied");
   })
 })

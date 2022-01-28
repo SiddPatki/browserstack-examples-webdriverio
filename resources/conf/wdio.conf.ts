@@ -1,4 +1,6 @@
-import * as mergeResults from 'wdio-mochawesome-reporter/mergeResults'
+const mergeResults = require('wdio-mochawesome-reporter/mergeResults')
+
+
 export const config = {
 
   autoCompileOpts: {
@@ -59,9 +61,9 @@ export const config = {
     ui: 'bdd',
     timeout: 60000
   },
-  afterTest: function (_test: Record<string, unknown>, _context: Record<string, unknown>, { error }: Record<string, unknown>): void {
+  afterTest: async function (_test: Record<string, unknown>, _context: Record<string, unknown>, { error }: Record<string, unknown>): Promise<void> {
     if (error) {
-      browser.takeScreenshot();
+      await browser.takeScreenshot();
     }
   },
   // Located in your wdio.conf.js file

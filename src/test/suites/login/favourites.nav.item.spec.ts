@@ -12,7 +12,7 @@ describe('StackDemo login', () => {
     const favourites = await $('#favourites')
     await favourites.click();
 
-    browser.waitUntil(async () => {
+    await browser.waitUntil(async () => {
       const pageUrl = await browser.getUrl();
       return pageUrl.indexOf('signin?favourites=true') > -1
     }, { timeout: 5000 })

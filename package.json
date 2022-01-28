@@ -1,5 +1,5 @@
 {
-  "name": "browserstack-examples-webdriverio",
+  "name": "browserstack-examples-webdriverio-typescript",
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
@@ -49,6 +49,7 @@
     "webdriverio": "7.2.2"
   },
   "dependencies": {
+    "@axe-core/webdriverio": "^4.3.2",
     "mochawesome-report-generator": "3.1.5"
   }
 }
