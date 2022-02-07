@@ -44,12 +44,13 @@ describe('Order a product', () => {
 
     await confirmationPage.waitForConfirmationToBeDisplayed();
     await expect(await (await confirmationPage.confirmationMessage).getText()).to.equal('Your Order has been successfully placed.');
-    await confirmationPage.clickDownloadPdf();
-    await confirmationPage.downloadedFileExists();
-    // if(browser.config.onBrowserstack){
-    //   await confirmationPage.clickDownloadPdf();
-    //   await confirmationPage.downloadedFileExists();
-    // }
+
+    if(browser.config.user && !driver.isMobile){
+      await confirmationPage.clickDownloadPdf();
+      const fileDownloadCheck = await confirmationPage.downloadedFileExists();
+      await expect(fileDownloadCheck).to.equal(true);
+
+    }
     await confirmationPage.clickContinueShoppingButton();
 
     await homePage.navigateToOrders();

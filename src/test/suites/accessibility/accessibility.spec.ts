@@ -26,6 +26,7 @@ describe('Accessibility test', () => {
     const results = await builder.analyze();
     const violations = JSON.stringify(results.violations, null, 1);
     console.log(violations);
+    
     await expect(violations).to.be.empty;
      //There are 8 accessibility violations in the demo website.
   });

@@ -32,11 +32,12 @@ export class ConfirmationPage extends Page {
     (await this.downloadPDFLink).click();
   }
 
-  async downloadedFileExists(): Promise<void> {
+  async downloadedFileExists(): Promise<unknown> {
     await browser.pause(2000);
     const fileExists = await browser.execute('browserstack_executor: {"action": "fileExists"}');
-
-    await expect(fileExists).equals(true);
+    typeof fileExists === 'string'
+      ? fileExists : ''      
+    return await fileExists;
   }
 
 }
