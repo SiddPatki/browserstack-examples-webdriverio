@@ -12,11 +12,8 @@ blocks:
           commands:
             - checkout
             - sem-version node 12
-            - cache restore
             - npm install
-            - cache store
             - echo $SEMAPHORE_GIT_DIR
-            - npm run build --if-present
             - npm run bstack-local
       prologue:
         commands:
