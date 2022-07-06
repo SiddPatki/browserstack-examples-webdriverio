@@ -5,22 +5,22 @@ agent:
     type: e1-standard-2
     os_image: ubuntu2004
 blocks:
-  - name: Setup and test
+  - name: 'Browserstack '
     task:
       jobs:
-        - name: Browserstack
+        - name: Local Test
           commands:
             - checkout
             - sem-version node 12
             - cache restore
             - npm install
             - cache store
+            - echo $SEMAPHORE_GIT_DIR
+            - npm run build --if-present
             - npm run bstack-local
-      secrets:
-        - name: Browserstack Creds
       prologue:
         commands:
           - 'git clone https://github.com/browserstack/browserstack-demo-app'
-          - cd ./browserstack-demo-app
+          - echo $SEMAPHORE_GIT_DIR
           - yarn install
           - yarn dev
