@@ -10,21 +10,16 @@ blocks:
       jobs:
         - name: Localhost
           commands:
-            - 'git clone https://github.com/browserstack/browserstack-demo-app'
-            - yarn install
-            - yarn dev
-      secrets:
-        - name: Browserstack Creds
-  - name: Browserstack
-    task:
-      secrets:
-        - name: Browserstack Creds
-      jobs:
-        - name: Local testing
-          commands:
             - checkout
             - sem-version node 12
             - cache restore
             - npm install
             - cache store
             - npm run bstack-local
+      secrets:
+        - name: Browserstack Creds
+      prologue:
+        commands:
+          - 'git clone https://github.com/browserstack/browserstack-demo-app'
+          - yarn install
+          - yarn dev
