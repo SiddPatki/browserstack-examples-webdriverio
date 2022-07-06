@@ -5,10 +5,10 @@ agent:
     type: e1-standard-2
     os_image: ubuntu2004
 blocks:
-  - name: Setup app
+  - name: Setup and test
     task:
       jobs:
-        - name: Localhost
+        - name: Browserstack
           commands:
             - checkout
             - sem-version node 12
@@ -21,5 +21,6 @@ blocks:
       prologue:
         commands:
           - 'git clone https://github.com/browserstack/browserstack-demo-app'
+          - cd ./browserstack-demo-app
           - yarn install
           - yarn dev
