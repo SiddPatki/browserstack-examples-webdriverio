@@ -15,6 +15,10 @@ blocks:
             - cache restore
             - npm install
             - cache store
-            - npm run bstack-local
+            - npm run bstack-single
       secrets:
         - name: Browserstack Creds
+      epilogue:
+        always:
+          commands:
+            - npm run generate-report
