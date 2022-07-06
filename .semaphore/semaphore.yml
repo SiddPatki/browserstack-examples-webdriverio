@@ -5,23 +5,16 @@ agent:
     type: e1-standard-2
     os_image: ubuntu2004
 blocks:
-  - name: Checkout-Build
+  - name: Local Testing on Browserstack
     task:
       jobs:
-        - name: Setup
+        - name: Test
           commands:
             - checkout
             - sem-version node 12
             - cache restore
             - npm install
             - cache store
-      secrets:
-        - name: Browserstack Creds
-  - name: Test
-    task:
-      jobs:
-        - name: Run E2E Test on BrowserStack
-          commands:
-            - npm run bstack-single
+            - npm run bstack-local
       secrets:
         - name: Browserstack Creds
